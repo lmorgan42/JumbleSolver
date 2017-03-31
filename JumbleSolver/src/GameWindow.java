@@ -15,6 +15,8 @@ public class GameWindow extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				//NICOLE WAS HERE (ignore testing git)
+				
 				try {
 					GameWindow frame = new GameWindow();
 					frame.setVisible(true);
