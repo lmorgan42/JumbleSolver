@@ -1,12 +1,10 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.SynchronousQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -15,20 +13,24 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JScrollBar;
 
 public class GameWindow extends JFrame {
 
+
+	private static final long serialVersionUID = 5183479711955824410L;
 	private JPanel pnlMain;
 	private JTextField inWordNum;
 	private JTextField inSpaceNum;
 	JPanel pnlBody, pnlFinal, pnlSolve, pnlSpaceCnt, pnlWordCnt;
+	JScrollPane scPnlBody;
 	JLabel lblWNum, lblSpaceCount;
 	JButton btnSolve;
 	ArrayList<JPanel> pnls = new ArrayList<JPanel>();
+	ArrayList<CBtnPanel> minPnls = new ArrayList<CBtnPanel>();
 	ArrayList<JTextField> txts = new ArrayList<JTextField>();
 	ArrayList<ArrayList<JLabel>> lbls = new ArrayList<ArrayList<JLabel>>();
-	int Circles = 0;
+	ArrayList<CircleBtn> cBtns = new ArrayList<CircleBtn>();
+	int circles = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -76,6 +78,7 @@ public class GameWindow extends JFrame {
 		});
 
 		pnlBody = new JPanel();
+		scPnlBody = new JScrollPane();
 		pnlMain.add(pnlBody, "cell 0 1,grow");
 		pnlBody.setLayout(new MigLayout("", "[]", "[]"));
 
@@ -103,33 +106,53 @@ public class GameWindow extends JFrame {
 	}
 	
 	private void makeCirButtons(String in, int index){
+		System.out.println("called");
+		minPnls.get(index).clrBtns();
+		minPnls.get(index).removeAll();
 		if(in.length() > 0 && !in.contains(" ")){
 			for(int i = 0; i < in.length(); i++){
-				CircleLabel frank = new CircleLabel();
-				frank.addActionListener(new ActionListener(){
+				
+				minPnls.get(index).addBtn(new CircleBtn());
+				minPnls.get(index).getCBtn(i).addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
-						
+						if(((CircleBtn) e.getSource()).getCircle()){
+							circles++;
+							((CircleBtn) e.getSource()).setCircle(false);
+						}
+						else{
+							circles--;
+							((CircleBtn) e.getSource()).setCircle(true);
+						}
 					}
 				});
+				minPnls.get(index).add(minPnls.get(index).getCBtn(i), "cell "+i+" 0");
+				System.out.println("looped "+i);
 			}
+			
 		}
 		else{
 			
 		}
+		pnlBody.revalidate();
+		pnlBody.repaint();
 	}
 	
 	private void genWordIns(String num){
 		System.out.println("changed");
 		try{
 			System.out.println("mark 1");
+			minPnls.clear();
 			pnls.clear();
 			txts.clear();
 			pnlBody.removeAll();
 			for(int i = 0; i < Integer.parseInt(num); i++){
 				pnls.add(new JPanel());
-				pnls.get(i).setLayout(new MigLayout("","10[]20[]","[]"));
+				pnls.get(i).setLayout(new MigLayout("","10[]20[grow]","[]"));
 				txts.add(new JTextField());
+				minPnls.add(new CBtnPanel());
+				minPnls.get(i).setLayout(new MigLayout("","[]","[]"));
+				pnls.get(i).add(minPnls.get(i), "cell 1 0,growx");
 				txts.get(i).setColumns(10);
 				txts.get(i).getDocument().putProperty("owner", txts.get(i));
 				txts.get(i).getDocument().putProperty("index", i);
@@ -140,10 +163,14 @@ public class GameWindow extends JFrame {
 						makeCirButtons(owner.getText(), index);
 					}
 					public void removeUpdate(DocumentEvent e) {
-						genWordIns(inWordNum.getText());
+						JTextField owner = (JTextField) e.getDocument().getProperty("owner");
+						int index = (int) e.getDocument().getProperty("index");
+						makeCirButtons(owner.getText(), index);
 					}
 					public void insertUpdate(DocumentEvent e) {
-						genWordIns(inWordNum.getText());
+						JTextField owner = (JTextField) e.getDocument().getProperty("owner");
+						int index = (int) e.getDocument().getProperty("index");
+						makeCirButtons(owner.getText(), index);
 					}
 				});
 				pnls.get(i).add(txts.get(i), "cell 0 0");
