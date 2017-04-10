@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 public class CircleBtn extends JButton{
 	private static final long serialVersionUID = -3498444475365603218L;
-	private boolean circle; 
+	protected boolean circle; 
 	
 	public CircleBtn(){
 		super();
@@ -19,7 +19,6 @@ public class CircleBtn extends JButton{
 		setBorder(null);
 		setMargin(new Insets(0, 0, 0, 0));
 		setContentAreaFilled(false);
-		
 	}
 	
 	public boolean getCircle(){

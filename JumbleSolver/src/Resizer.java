@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Resizer {
 	public static Image getScaledImage(Image srcImg, int w, int h){

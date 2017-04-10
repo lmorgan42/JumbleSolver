@@ -30,7 +30,8 @@ public class GameWindow extends JFrame {
 	ArrayList<JTextField> txts = new ArrayList<JTextField>();
 	ArrayList<ArrayList<JLabel>> lbls = new ArrayList<ArrayList<JLabel>>();
 	ArrayList<CircleBtn> cBtns = new ArrayList<CircleBtn>();
-	int circles = 0;
+	ArrayList<SpcBtn> sBtns = new ArrayList<SpcBtn>();
+	int circles = 0, spaces = 0;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -105,6 +106,30 @@ public class GameWindow extends JFrame {
 		pnlSolve.add(btnSolve, "cell 0 0");
 	}
 	
+	private void makeFinalBtns(){
+		pnlFinal.removeAll();
+		sBtns.clear();
+		for(int i = 0; i < circles; i++){
+			sBtns.add(new SpcBtn());
+			pnlFinal.add(sBtns.get(i));
+			sBtns.get(i).addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e){
+					if(((CircleBtn) e.getSource()).getCircle()){
+						spaces++;
+						((CircleBtn) e.getSource()).setCircle(false);
+					}
+					else{
+						spaces--;
+						((CircleBtn) e.getSource()).setCircle(true);
+					}
+				}
+			});
+		}
+		pnlFinal.revalidate();
+		pnlFinal.repaint();
+	}
+	
 	private void makeCirButtons(String in, int index){
 		System.out.println("called");
 		minPnls.get(index).clrBtns();
@@ -118,10 +143,12 @@ public class GameWindow extends JFrame {
 					public void actionPerformed(ActionEvent e){
 						if(((CircleBtn) e.getSource()).getCircle()){
 							circles++;
+							makeFinalBtns();
 							((CircleBtn) e.getSource()).setCircle(false);
 						}
 						else{
 							circles--;
+							makeFinalBtns();
 							((CircleBtn) e.getSource()).setCircle(true);
 						}
 					}
