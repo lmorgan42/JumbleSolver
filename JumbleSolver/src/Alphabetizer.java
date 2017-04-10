@@ -5,7 +5,7 @@ public class Alphabetizer {
 	public Alphabetizer(){
 		
 	}
-	public String alph(String s){
+	public static String alph(String s){
 		ArrayList<Integer> asc = new ArrayList<Integer>();
 		String last = "";
 		for (int i = 0; i< s.length(); i++){
