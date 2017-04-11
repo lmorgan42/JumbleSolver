@@ -33,7 +33,7 @@ public class GameWindow extends JFrame {
 	ArrayList<CircleBtn> cBtns = new ArrayList<CircleBtn>();
 	ArrayList<SpcBtn> sBtns = new ArrayList<SpcBtn>();
 	int circles = 0, spaces = 0;
-	static LanguageWindow lWin = new LanguageWindow();
+	LanguageWindow lWin = new LanguageWindow(this);
 	File chosenFile;
 	
 	//Getters and setters here
@@ -50,15 +50,27 @@ public class GameWindow extends JFrame {
 		//Returns users chosen language file
 		return chosenFile;
 	}
+	
+	public ArrayList<ArrayList<Integer>> getCircled(){
+		return null;
+	}
+	
+	public void setWrdFile(File set){
+		chosenFile = set;
+	}
+	
+	public void openLW(){
+		lWin.open();
+	}
 
 	public static void main(String[] args) {
-		lWin.open();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				//NICOLE WAS HERE (ignore testing git)
 
 				try {
 					GameWindow frame = new GameWindow();
+					frame.openLW();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

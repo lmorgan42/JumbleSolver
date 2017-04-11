@@ -1,5 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -14,6 +18,9 @@ import javax.swing.JButton;
 public class LanguageWindow extends JFrame {
 
 	private JPanel contentPane;
+	File[] files;
+	GameWindow gw;
+	
 
 	/**
 	 * Launch the application.
@@ -22,7 +29,7 @@ public class LanguageWindow extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LanguageWindow frame = new LanguageWindow();
+					LanguageWindow frame = new LanguageWindow(gw);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,7 +41,8 @@ public class LanguageWindow extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LanguageWindow() {
+	public LanguageWindow(GameWindow gw) {
+		this.gw = gw;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 150);
 		contentPane = new JPanel();
@@ -50,6 +58,13 @@ public class LanguageWindow extends JFrame {
 		
 		JButton btnOk = new JButton("Ok");
 		contentPane.add(btnOk, "cell 0 2,alignx center,aligny center");
+		btnOk.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				gw.setWrdFile(files[comboBox.getSelectedIndex()]);
+				dispatchEvent(new WindowEvent((Window) e.getSource(), WindowEvent.WINDOW_CLOSING));
+			}
+		});
 		ArrayList<String> Languages = getLangs();
 		for(String temp : Languages){
 			comboBox.addItem(temp);
@@ -59,7 +74,7 @@ public class LanguageWindow extends JFrame {
 	private ArrayList<String> getLangs(){
 		ArrayList<String> toRe = new ArrayList<String>();
 		File folder = new File(".\\info");
-		File[] files = folder.listFiles();
+		files = folder.listFiles();
 		for(int i = 0; i < files.length; i++){
 			String temp = files[i].getName();
 			if(temp.contains("Dict")){
