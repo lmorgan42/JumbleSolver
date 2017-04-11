@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,8 +33,26 @@ public class GameWindow extends JFrame {
 	ArrayList<CircleBtn> cBtns = new ArrayList<CircleBtn>();
 	ArrayList<SpcBtn> sBtns = new ArrayList<SpcBtn>();
 	int circles = 0, spaces = 0;
+	static LanguageWindow lWin = new LanguageWindow();
+	File chosenFile;
+	
+	//Getters and setters here
+	public ArrayList<String> getJumWords(){
+		//Returns array list of all jumbled words inputed, may have empty strings at end
+		ArrayList<String> toRe = new ArrayList<String>();
+		for(JTextField temp : txts){
+			toRe.add(temp.getText());
+		}
+		return toRe;
+	}
+	
+	public File getWrdFile(){
+		//Returns users chosen language file
+		return chosenFile;
+	}
 
 	public static void main(String[] args) {
+		lWin.open();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				//NICOLE WAS HERE (ignore testing git)
@@ -111,7 +130,7 @@ public class GameWindow extends JFrame {
 		sBtns.clear();
 		for(int i = 0; i < circles; i++){
 			sBtns.add(new SpcBtn());
-			pnlFinal.add(sBtns.get(i));
+			pnlFinal.add(sBtns.get(i), "cell " + i + " 0");
 			sBtns.get(i).addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e){
