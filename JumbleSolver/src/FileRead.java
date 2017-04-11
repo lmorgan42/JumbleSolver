@@ -6,12 +6,13 @@ import java.util.Scanner;
 
 public class FileRead{
 
-	HashMap m = new HashMap();
+	public static HashMap m = new HashMap();
 	HashSet temp = new HashSet();
 	String ln = null;
 	String key = null;
 
 	public FileRead() {
+		
 	}
 
 	public void read(File txt) {
@@ -39,7 +40,7 @@ public class FileRead{
 		}
 	}
 	
-	public HashMap getMap(){
+	public static HashMap getMap(){
 		return m; 
 	}
 
