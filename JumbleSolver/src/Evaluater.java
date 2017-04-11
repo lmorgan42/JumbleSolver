@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Evaluater {
 	
@@ -14,8 +15,16 @@ public class Evaluater {
 	}
 
 	private String solve(String string) {
-		// TODO Auto-generated method stub
-		return null;
+		String s = "";
+		s = Alphabetizer.alph(string);
+		HashMap hash = FileRead.getMap();
+		HashSet set = (HashSet)hash.get(s);
+		if (set == null){
+			return null;
+		}
+		s = (String)set.iterator().next();
+		return s;
 	}
+	
 	
 }
