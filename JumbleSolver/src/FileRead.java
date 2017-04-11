@@ -38,4 +38,9 @@ public class FileRead{
 			e.printStackTrace();
 		}
 	}
+	
+	public HashMap getMap(){
+		return m; 
+	}
+
 }
