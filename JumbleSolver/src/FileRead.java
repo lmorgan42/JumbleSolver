@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class FileRead {
+public class FileRead{
 
 	HashMap m = new HashMap();
 	HashSet temp = new HashSet();
@@ -19,9 +19,7 @@ public class FileRead {
 			Scanner sc = new Scanner(txt);
 			if (sc != null) {
 				while (sc.hasNext()) {
-					ln = sc.nextLine();
-					// alphabetize stuffz
-					key = Alphabetizer.alph(ln);
+					key = Alphabetizer.alph(sc.nextLine());
 					if (m.get(key) == null) {
 						temp.add(ln);
 						m.put(key, temp);

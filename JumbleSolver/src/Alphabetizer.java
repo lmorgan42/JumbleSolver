@@ -3,8 +3,8 @@ import java.util.Collections;
 
 public class Alphabetizer {
 	public Alphabetizer(){
-		
 	}
+	
 	public static String alph(String s){
 		ArrayList<Integer> asc = new ArrayList<Integer>();
 		String last = "";
