@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class FileRead{
 
 	public static HashMap<String, HashSet<String>> m = new HashMap<String, HashSet<String>>();
-	HashSet<String> temp = new HashSet<String>();
 	String ln = null;
 	String key = null;
 
@@ -20,13 +19,15 @@ public class FileRead{
 			Scanner sc = new Scanner(txt);
 			if (sc != null) {
 				while (sc.hasNext()) {
+					HashSet<String> temp = new HashSet<String>();
 					ln = sc.nextLine().toLowerCase();
 					key = Alphabetizer.alph(ln);
 					if (m.get(key) == null) {
 						temp.add(ln);
 						m.put(key, temp);
 						temp.clear();
-					} else {
+					} 
+					else {
 						temp = (HashSet<String>) m.get(key);
 						temp.add(ln);
 						m.put(key, temp);
