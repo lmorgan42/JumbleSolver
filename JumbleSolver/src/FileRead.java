@@ -20,7 +20,8 @@ public class FileRead{
 			Scanner sc = new Scanner(txt);
 			if (sc != null) {
 				while (sc.hasNext()) {
-					key = Alphabetizer.alph(sc.nextLine());
+					ln = sc.nextLine().toLowerCase();
+					key = Alphabetizer.alph(ln);
 					if (m.get(key) == null) {
 						temp.add(ln);
 						m.put(key, temp);
