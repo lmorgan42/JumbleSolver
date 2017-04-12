@@ -14,7 +14,7 @@ public class Evaluater {
 		}
 		return words;
 	}
-
+	//solves the string testing 
 	private String solve(String string) {
 		String s = "";
 		s = Alphabetizer.alph(string);
