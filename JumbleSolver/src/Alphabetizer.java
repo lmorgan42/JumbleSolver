@@ -4,8 +4,9 @@ import java.util.Collections;
 public class Alphabetizer {
 	public Alphabetizer(){
 	}
-	
+	//alphabetizes the string
 	public static String alph(String s){
+		s.toLowerCase();
 		ArrayList<Integer> asc = new ArrayList<Integer>();
 		String last = "";
 		for (int i = 0; i< s.length(); i++){
