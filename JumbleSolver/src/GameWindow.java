@@ -57,6 +57,7 @@ public class GameWindow extends JFrame {
 	
 	public void setWrdFile(File set){
 		chosenFile = set;
+		System.out.println(chosenFile);
 	}
 	
 	public void openLW(){
