@@ -3,6 +3,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,6 +38,8 @@ public class GameWindow extends JFrame {
 	int circles = 0, spaces = 0;
 	LanguageWindow lWin = new LanguageWindow(this);
 	File chosenFile;
+	HashMap<String,HashSet<String>> langmap;
+	FileRead fileRead = new FileRead();
 	
 	//Getters and setters here
 	public ArrayList<String> getJumWords(){
@@ -55,9 +60,15 @@ public class GameWindow extends JFrame {
 		return null;
 	}
 	
+	public HashMap<String,HashSet<String>> getHashMap(){
+		return langmap;
+	}
+	
 	public void setWrdFile(File set){
 		chosenFile = set;
 		System.out.println(chosenFile);
+		fileRead.read(chosenFile);
+		langmap = fileRead.getMap();
 	}
 	
 	public void openLW(){

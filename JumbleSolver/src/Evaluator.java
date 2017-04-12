@@ -4,7 +4,10 @@ import java.util.HashSet;
 
 public class Evaluator {
 	
+	GameWindow gw;
+	
 	public Evaluator(){
+		this.gw = gw;
 	}
 		
 	public ArrayList<String> getWords(ArrayList<String> list){ 
@@ -20,7 +23,7 @@ public class Evaluator {
 		ArrayList <String> s = new ArrayList<String>();
 		String temp = "";
 		temp = Alphabetizer.alph(string);
-		HashMap hash = FileRead.getMap();
+		HashMap hash = gw.getHashMap();
 		HashSet set = (HashSet)hash.get(temp);
 		if (set == null){
 			return null;
