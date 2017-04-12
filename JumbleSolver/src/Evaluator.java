@@ -10,11 +10,12 @@ public class Evaluator {
 		this.gw = gw;
 	}
 		
-	public ArrayList<String> getWords(ArrayList<String> list){ 
-		ArrayList<String> words = new ArrayList<String>();
+	public ArrayList<ArrayList<String>> getWords(ArrayList<String> list){ 
+		ArrayList<ArrayList <String>> words = new ArrayList<ArrayList<String>>();
 		for (int i =0; i<list.size(); i++){
-			words.addAll(solve(list.get(i)));
+			words.add(solve(list.get(i)));
 		}
+		words.add(finalWord());
 		return words;
 	}
 
@@ -33,6 +34,10 @@ public class Evaluator {
 			s.add(temp);
 		}
 		return s;
+	}
+	
+	private ArrayList<String> finalWord(){
+		return null;
 	}
 	
 }
