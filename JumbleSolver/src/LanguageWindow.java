@@ -84,7 +84,7 @@ public class LanguageWindow extends JFrame {
 
 	private ArrayList<String> getLangs(){
 		ArrayList<String> toRe = new ArrayList<String>();
-		File folder = new File(".\\info");
+		File folder = new File("./info");
 		files = folder.listFiles();
 		if (files.length == 0){
 			JOptionPane.showMessageDialog(new JFrame(),"There were no files in the folder info in the same directory as this program. Please add language files in this format: EnglishDict or EspanoleDicts","No Language File Detected",JOptionPane.ERROR_MESSAGE);
