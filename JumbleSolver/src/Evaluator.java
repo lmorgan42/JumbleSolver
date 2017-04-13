@@ -6,21 +6,12 @@ public class Evaluator {
 	
 	GameWindow gw;
 	
-	public Evaluator(){
+	public Evaluator(GameWindow gw){
 		this.gw = gw;
 	}
-		
-	public ArrayList<ArrayList<String>> getWords(ArrayList<String> list){ 
-		ArrayList<ArrayList <String>> words = new ArrayList<ArrayList<String>>();
-		for (int i =0; i<list.size(); i++){
-			words.add(solve(list.get(i)));
-		}
-		words.add(finalWord());
-		return words;
-	}
 
-	//solves the string testing 
-	private ArrayList <String> solve(String string) {
+	//returns all possible words for each key  
+	private ArrayList <String> keyWords(String string) {
 		ArrayList <String> s = new ArrayList<String>();
 		String temp = "";
 		temp = Alphabetizer.alph(string);
@@ -36,9 +27,63 @@ public class Evaluator {
 		return s;
 	}
 	
-	private ArrayList<String> finalWord(){
-		return null;
+	//returns all the possible words for all the keys
+	private ArrayList<ArrayList<String>> getWords(){ 
+		ArrayList<ArrayList <String>> words = new ArrayList<ArrayList<String>>();
+		ArrayList<String> s = gw.getJumWords();
+		for (int i =0; i<s.size(); i++){
+			words.add(keyWords(s.get(i)));
+		}
+		return words;
 	}
 	
+	
+	private ArrayList<ArrayList<String>> getCircledLetters() {
+		ArrayList<ArrayList<String>> allPos = this.getWords();
+		ArrayList<ArrayList<String>> lets = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<Integer>> circled = gw.getCircled();
+		String temp = "";
+		ArrayList <String> temp2 = new ArrayList <String>();
+		if (circled == null){
+			return null;
+		}
+		for (int i = 0; i<allPos.size(); i++){
+			for (int x = 0; x<allPos.get(i).size(); x++){
+				for (int z = 0; z<allPos.get(i).get(x).length(); z++){
+					if(circled.get(i).indexOf((Integer)z)>0){
+						temp+=allPos.get(i).get(x).substring(z);
+					}
+				}
+				temp2.add(temp);
+			}
+			lets.add(temp2);
+		}
+		return lets;
+	}
+	
+	//returns the final word 
+	private ArrayList<String> finalWord(){
+		ArrayList<ArrayList<Integer>> circled = gw.getCircled();
+		int[] numFinalWords = gw.getFinalLayout();
+		ArrayList<ArrayList<String>> allPos = this.getWords();
+		getCircledLetters();
+		ArrayList<String> word = new ArrayList<String>();
+		for (int i = 0; i<allPos.size(); i++){
+			for (int x=0; x<0; x++){
+				
+			}
+		}
+		return word;
+	}
+	
+
+	//returns all the words including final word as solved
+	private ArrayList<ArrayList<String>> solve(ArrayList<String> string){
+		ArrayList<ArrayList<String>> finalWords = new ArrayList<ArrayList<String>>();
+		
+		finalWords.add(finalWord());
+
+		return null;
+	}
 }
 
