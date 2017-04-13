@@ -25,7 +25,7 @@ public class CircleBtn extends JButton{
 		return circle;
 	}
 	
-	private void setIco(){
+	protected void setIco(){
 		if(circle){
 			try {
 				this.setIcon(new ImageIcon(Resizer.getScaledImage(ImageIO.read(CircleBtn.class.getResourceAsStream("/res/circle.png")), 20, 20)));
