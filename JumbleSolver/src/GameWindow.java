@@ -64,6 +64,10 @@ public class GameWindow extends JFrame {
 		return langmap;
 	}
 	
+	public int[] getFinalLayout(){
+		return null;
+	}
+	
 	public void setWrdFile(File set){
 		chosenFile = set;
 		System.out.println(chosenFile);
@@ -152,6 +156,8 @@ public class GameWindow extends JFrame {
 	private void makeFinalBtns(){
 		pnlFinal.removeAll();
 		sBtns.clear();
+		System.out.println("called");
+		System.out.println("Circles: " + circles);
 		for(int i = 0; i < circles; i++){
 			sBtns.add(new SpcBtn());
 			pnlFinal.add(sBtns.get(i), "cell " + i + " 0");
