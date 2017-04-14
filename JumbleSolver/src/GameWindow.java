@@ -35,12 +35,12 @@ public class GameWindow extends JFrame {
 	ArrayList<ArrayList<JLabel>> lbls = new ArrayList<ArrayList<JLabel>>();
 	ArrayList<CircleBtn> cBtns = new ArrayList<CircleBtn>();
 	ArrayList<SpcBtn> sBtns = new ArrayList<SpcBtn>();
-	int circles = 0, spaces = 0;
+	int circles = 0, spaces = 0, xSpace = 0;
 	LanguageWindow lWin = new LanguageWindow(this);
 	File chosenFile;
 	HashMap<String,HashSet<String>> langmap;
 	FileRead fileRead = new FileRead();
-	
+
 	//Getters and setters here
 	public ArrayList<String> getJumWords(){
 		//Returns array list of all jumbled words inputed, may have empty strings at end
@@ -50,31 +50,74 @@ public class GameWindow extends JFrame {
 		}
 		return toRe;
 	}
-	
+
 	public File getWrdFile(){
 		//Returns users chosen language file
 		return chosenFile;
 	}
-	
+
 	public ArrayList<ArrayList<Integer>> getCircled(){
-		return null;
+		if(minPnls.isEmpty()){
+			return null;
+		}
+		else{
+			ArrayList<ArrayList<Integer>> toRe = new ArrayList<ArrayList<Integer>>();
+			for(int i = 0; i < minPnls.size(); i++){
+				if(minPnls.get(i).getAllBtns().size() <= 0){
+					toRe.add(null);
+				}
+				else{
+					ArrayList<Integer> temp = new ArrayList<Integer>();
+					for(int k = 0; k < minPnls.get(i).getAllBtns().size(); k++){
+						if(minPnls.get(i).getCBtn(k).circle){
+							temp.add(k);
+						}
+					}
+					toRe.add(temp);
+				}
+			}
+			return toRe;
+		}
 	}
-	
+
 	public HashMap<String,HashSet<String>> getHashMap(){
 		return langmap;
 	}
-	
+
 	public int[] getFinalLayout(){
-		return null;
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		if(sBtns.isEmpty()){
+			return null;
+		}
+		else{
+			int count = 0;
+			for(int i = 0; i < sBtns.size(); i++){
+				if(sBtns.get(i).circle &&( i == 0 || i==sBtns.size()-1)){
+
+				}
+				else if(sBtns.get(i).circle){
+					temp.add(count);
+					count = 0;
+				}
+				else{
+					count++;
+				}
+			}
+			int[] toRe = new int[temp.size()];
+			for(int i = 0; i < temp.size(); i++){
+				toRe[i] = temp.get(i);
+			}
+			return toRe;
+		}
 	}
-	
+
 	public void setWrdFile(File set){
 		chosenFile = set;
 		System.out.println(chosenFile);
 		fileRead.read(chosenFile);
 		langmap = fileRead.getMap();
 	}
-	
+
 	public void openLW(){
 		lWin.open();
 	}
@@ -142,6 +185,42 @@ public class GameWindow extends JFrame {
 		pnlSpaceCnt.add(lblSpaceCount, "cell 0 0,alignx trailing");
 
 		inSpaceNum = new JTextField();
+		inSpaceNum.getDocument().putProperty("owner", inSpaceNum);
+		inSpaceNum.getDocument().addDocumentListener(new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				JTextField owner = (JTextField) e.getDocument().getProperty("owner");
+				try{
+					xSpace = Integer.parseInt(owner.getText());
+					makeFinalBtns();
+				}
+				catch(Exception er){
+					xSpace = 0;
+					makeFinalBtns();
+				}
+			}
+			public void removeUpdate(DocumentEvent e) {
+				JTextField owner = (JTextField) e.getDocument().getProperty("owner");
+				try{
+					xSpace = Integer.parseInt(owner.getText());
+					makeFinalBtns();
+				}
+				catch(Exception er){
+					xSpace = 0;
+					makeFinalBtns();
+				}
+			}
+			public void insertUpdate(DocumentEvent e) {
+				JTextField owner = (JTextField) e.getDocument().getProperty("owner");
+				try{
+					xSpace = Integer.parseInt(owner.getText());
+					makeFinalBtns();
+				}
+				catch(Exception er){
+					xSpace = 0;
+					makeFinalBtns();
+				}
+			}
+		});
 		pnlSpaceCnt.add(inSpaceNum, "cell 1 0,growx");
 		inSpaceNum.setColumns(3);
 
@@ -152,13 +231,13 @@ public class GameWindow extends JFrame {
 		btnSolve = new JButton("Solve");
 		pnlSolve.add(btnSolve, "cell 0 0");
 	}
-	
+
 	private void makeFinalBtns(){
 		pnlFinal.removeAll();
 		sBtns.clear();
 		System.out.println("called");
 		System.out.println("Circles: " + circles);
-		for(int i = 0; i < circles; i++){
+		for(int i = 0; i < circles + xSpace; i++){
 			sBtns.add(new SpcBtn());
 			pnlFinal.add(sBtns.get(i), "cell " + i + " 0");
 			sBtns.get(i).addActionListener(new ActionListener(){
@@ -178,25 +257,25 @@ public class GameWindow extends JFrame {
 		pnlFinal.revalidate();
 		pnlFinal.repaint();
 	}
-	
+
 	private void makeCirButtons(String in, int index){
 		System.out.println("called");
 		minPnls.get(index).clrBtns();
 		minPnls.get(index).removeAll();
 		if(in.length() > 0 && !in.contains(" ")){
 			for(int i = 0; i < in.length(); i++){
-				
+
 				minPnls.get(index).addBtn(new CircleBtn());
 				minPnls.get(index).getCBtn(i).addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
 						if(((CircleBtn) e.getSource()).getCircle()){
-							circles++;
+							circles--;
 							makeFinalBtns();
 							((CircleBtn) e.getSource()).setCircle(false);
 						}
 						else{
-							circles--;
+							circles++;
 							makeFinalBtns();
 							((CircleBtn) e.getSource()).setCircle(true);
 						}
@@ -205,15 +284,15 @@ public class GameWindow extends JFrame {
 				minPnls.get(index).add(minPnls.get(index).getCBtn(i), "cell "+i+" 0");
 				System.out.println("looped "+i);
 			}
-			
+
 		}
 		else{
-			
+
 		}
 		pnlBody.revalidate();
 		pnlBody.repaint();
 	}
-	
+
 	private void genWordIns(String num){
 		System.out.println("changed");
 		try{

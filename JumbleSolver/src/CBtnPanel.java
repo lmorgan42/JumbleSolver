@@ -12,6 +12,9 @@ public class CBtnPanel extends JPanel{
 	public CircleBtn getCBtn(int index){
 		return cBtns.get(index);
 	}
+	public ArrayList<CircleBtn> getAllBtns(){
+		return cBtns;
+	}
 	public void addBtn(CircleBtn cb){
 		cBtns.add(cb);
 	}
