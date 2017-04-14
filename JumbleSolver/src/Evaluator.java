@@ -12,6 +12,7 @@ public class Evaluator {
 
 	//returns all possible words for each key  
 	private ArrayList <String> keyWords(String string) {
+		System.out.println("ran keyWords");
 		ArrayList <String> s = new ArrayList<String>();
 		String temp = "";
 		temp = Alphabetizer.alph(string);
@@ -26,6 +27,7 @@ public class Evaluator {
 			System.out.print(temp+" ");
 		}
 		System.out.println("");
+		System.out.println("KEyWords s: " + s);
 		return s;
 	}
 	
@@ -34,8 +36,10 @@ public class Evaluator {
 		ArrayList<ArrayList <String>> words = new ArrayList<ArrayList<String>>();
 		ArrayList<String> s = gw.getJumWords();
 		for (int i =0; i<s.size(); i++){
+			System.out.println("ran getWord for loop " + i + " times");
 			words.add(keyWords(s.get(i)));
 		}
+		System.out.println("words: " + words);
 		return words;
 	}
 	

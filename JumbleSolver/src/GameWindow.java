@@ -40,6 +40,7 @@ public class GameWindow extends JFrame {
 	File chosenFile;
 	HashMap<String,HashSet<String>> langmap;
 	FileRead fileRead = new FileRead();
+	Evaluator eval = new Evaluator(this);
 
 	//Getters and setters here
 	public ArrayList<String> getJumWords(){
@@ -47,7 +48,9 @@ public class GameWindow extends JFrame {
 		ArrayList<String> toRe = new ArrayList<String>();
 		for(JTextField temp : txts){
 			toRe.add(temp.getText());
+			System.out.println(temp.getText());
 		}
+		System.out.println("ToRe: " + toRe);
 		return toRe;
 	}
 
@@ -229,6 +232,12 @@ public class GameWindow extends JFrame {
 		pnlSolve.setLayout(new MigLayout("", "[]", "[]"));
 
 		btnSolve = new JButton("Solve");
+		btnSolve.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				eval.getWords();
+			}
+		});
 		pnlSolve.add(btnSolve, "cell 0 0");
 	}
 
