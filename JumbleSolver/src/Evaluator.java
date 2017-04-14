@@ -11,23 +11,25 @@ public class Evaluator {
 	}
 
 	//returns all possible words for each key  
+	@SuppressWarnings("unchecked")
 	private ArrayList <String> keyWords(String string) {
 		System.out.println("ran keyWords");
 		ArrayList <String> s = new ArrayList<String>();
 		String temp = "";
 		temp = Alphabetizer.alph(string);
+		System.out.println("temp: "+temp);
 		HashMap hash = gw.getHashMap();
-		HashSet set = (HashSet)hash.get(temp);
+		HashSet<String> set = (HashSet<String>)hash.get(temp);
+		System.out.println("set: "+set.toString());
 		if (set == null){
 			return null;
 		}
-		while (set.iterator().hasNext()==true){
-			temp = (String)set.iterator().next();
-			s.add(temp);
-			System.out.print(temp+" ");
+		for (String x: set){
+			s.add(x);
+			System.out.print("x");
 		}
 		System.out.println("");
-		System.out.println("KEyWords s: " + s);
+		System.out.println("KeyWords s: " + s);
 		return s;
 	}
 	
