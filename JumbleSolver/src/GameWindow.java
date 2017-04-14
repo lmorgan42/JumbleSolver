@@ -172,8 +172,8 @@ public class GameWindow extends JFrame {
 		});
 
 		pnlBody = new JPanel();
-		scPnlBody = new JScrollPane();
-		pnlMain.add(pnlBody, "cell 0 1,grow");
+		scPnlBody = new JScrollPane(pnlBody);
+		pnlMain.add(scPnlBody, "cell 0 1,grow");
 		pnlBody.setLayout(new MigLayout("", "[]", "[]"));
 
 		pnlFinal = new JPanel();
