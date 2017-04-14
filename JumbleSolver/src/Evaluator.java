@@ -23,12 +23,14 @@ public class Evaluator {
 		while (set.iterator().hasNext()==true){
 			temp = (String)set.iterator().next();
 			s.add(temp);
+			System.out.print(temp+" ");
 		}
+		System.out.println("");
 		return s;
 	}
 	
 	//returns all the possible words for all the keys
-	private ArrayList<ArrayList<String>> getWords(){ 
+	public ArrayList<ArrayList<String>> getWords(){ 
 		ArrayList<ArrayList <String>> words = new ArrayList<ArrayList<String>>();
 		ArrayList<String> s = gw.getJumWords();
 		for (int i =0; i<s.size(); i++){
@@ -38,7 +40,7 @@ public class Evaluator {
 	}
 	
 	
-	private ArrayList<ArrayList<String>> getCircledLetters() {
+	public ArrayList<ArrayList<String>> getCircledLetters() {
 		ArrayList<ArrayList<String>> allPos = this.getWords();
 		ArrayList<ArrayList<String>> lets = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<Integer>> circled = gw.getCircled();
@@ -63,12 +65,10 @@ public class Evaluator {
 	
 	//returns the final word 
 	private ArrayList<String> finalWord(){
-		ArrayList<ArrayList<Integer>> circled = gw.getCircled();
+		ArrayList<ArrayList<String>> circled = getCircledLetters();
 		int[] numFinalWords = gw.getFinalLayout();
-		ArrayList<ArrayList<String>> allPos = this.getWords();
-		getCircledLetters();
 		ArrayList<String> word = new ArrayList<String>();
-		for (int i = 0; i<allPos.size(); i++){
+		for (int i = 0; i<circled.size(); i++){
 			for (int x=0; x<0; x++){
 				
 			}
