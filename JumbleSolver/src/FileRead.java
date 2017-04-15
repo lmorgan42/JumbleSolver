@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class FileRead{
 
-	public static HashMap<String, HashSet<String>> m = new HashMap<String, HashSet<String>>();
+	public HashMap<String, HashSet<String>> m = new HashMap<String, HashSet<String>>();
 	String ln = null;
 	String key = null;
 
@@ -25,15 +25,14 @@ public class FileRead{
 					if (m.get(key) == null) {
 						temp.add(ln);
 						m.put(key, temp);
-						temp.clear();
 					} 
 					else {
-						temp = (HashSet<String>) m.get(key);
+						for (String s: m.get(key)){
+							temp.add(s);
+						}
 						temp.add(ln);
 						m.put(key, temp);
-						temp.clear();
 					}
-
 				}
 			}
 
@@ -41,7 +40,7 @@ public class FileRead{
 			e.printStackTrace();
 		}
 	}
-	
+		
 	public HashMap<String, HashSet<String>> getMap(){
 		return m; 
 	}
